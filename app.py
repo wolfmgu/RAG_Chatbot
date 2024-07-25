@@ -1,25 +1,26 @@
 import random
+import difflib
 
 # Sample database of documents from different HR topics
 documents = {
     "Insurance": [
         "Our company offers comprehensive health insurance plans including medical, dental, and vision coverage.",
-        "Employees can choose from a variety of insurance plans that best suit their needs.",
-        "Life insurance and disability insurance are also available to ensure financial security."
+        "Employees are eligible for insurance after the first 30 days of service.",
+        "Life insurance and disability insurance are also available."
     ],
     "Paid Time Off": [
-        "Employees are entitled to paid time off (PTO) which includes vacation days, sick leave, and personal days.",
-        "Our PTO policy allows for flexible scheduling to accommodate work-life balance.",
+        "Employees are entitled to 120 hours of paid time off (PTO) which includes vacation days, sick leave, and personal days.",
+        "PTO should be arranged with your manager at least 30 days ahead of time.",
         "Unused PTO can be carried over to the next year, subject to company policy."
     ],
     "Professional Development": [
         "We offer a range of professional development opportunities, including training sessions, workshops, and online courses.",
-        "Employees are encouraged to pursue certifications and advanced degrees to further their careers.",
+        "Employees must complete 20 hours of professional development education each year.",
         "Mentorship programs are available to help employees develop leadership skills."
     ],
     "Retirement Benefits": [
         "The company offers a 401(k) retirement savings plan with employer matching contributions.",
-        "Employees can choose from a variety of investment options to suit their retirement goals.",
+        "Employees can choose from a variety of investment options after their first year of employment.",
         "We provide financial planning resources to help employees prepare for retirement."
     ]
 }
@@ -43,17 +44,30 @@ def retrieve_documents(query):
 
     return relevant_docs if relevant_docs else ["No relevant documents found."]
 
+# Function to find the best matching response based on user input
+def find_best_match(query, documents):
+    best_match = None
+    highest_similarity = 0
+
+    for doc in documents:
+        similarity = difflib.SequenceMatcher(None, query, doc).ratio()
+        if similarity > highest_similarity:
+            highest_similarity = similarity
+            best_match = doc
+
+    return best_match
+
 # Function to generate a response
 def generate_response(query):
     relevant_docs = retrieve_documents(query)
     if relevant_docs[0] == "No relevant documents found.":
         return relevant_docs[0]
     else:
-        return random.choice(relevant_docs)
+        return find_best_match(query, relevant_docs)
 
 # Chatbot function to simulate RAG
 def chatbot():
-    print("Welcome to your Human Resources Portal.  Please ask a question about your insurance, paid time off, professional development and retirement benefits. Type 'exit' to end the conversation.")
+    print("Welcome to your Human Resources Portal. Please ask a question about your insurance, paid time off, professional development, or retirement benefits. Type 'exit' to end the conversation.")
     while True:
         query = input("\nYou: ")
         if query.lower() == 'exit':
