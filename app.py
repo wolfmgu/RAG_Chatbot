@@ -53,7 +53,7 @@ def generate_response(query):
 
 # Chatbot function to simulate RAG
 def chatbot():
-    print("Welcome to the Human Resources RAG Chatbot! Type 'exit' to end the conversation.")
+    print("Welcome to your Human Resources Portal.  Please ask a question about your insurance, paid time off, professional development and retirement benefits. Type 'exit' to end the conversation.")
     while True:
         query = input("\nYou: ")
         if query.lower() == 'exit':
