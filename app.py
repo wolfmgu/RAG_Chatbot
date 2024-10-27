@@ -22,6 +22,11 @@ documents = {
         "The company offers a 401(k) retirement savings plan with employer matching contributions.",
         "Employees can choose from a variety of investment options after their first year of employment.",
         "We provide financial planning resources to help employees prepare for retirement."
+    ],
+    "Salary": [
+        "Our company offers competitive salaries and performance-based bonuses.",
+        "Employees are eligible for annual salary reviews and potential increases based on performance.",
+        "Bonuses are awarded based on individual and company performance metrics."
     ]
 }
 
